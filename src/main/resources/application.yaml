@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: veiculos-app
+          uri: lb://VEICULOS
+          predicates:
+            - Path=/veiculos/**
+          filters:
+            - AuthenticationFilter
+
+        - id: identity-service
+          uri: lb://IDENTITY-SERVICE
+          predicates:
+            - Path=/auth/**
+
+  application:
+    name: VEICULOS-GATEWAY
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://registry:8761/eureka/
